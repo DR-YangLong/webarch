@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="sessionCache">
+
+    <!--<terracottaConfig rejoin="true" url="192.168.18.50:9510" />-->
+	<diskStore path="java.io.tmpdir"/>
+
+    <defaultCache  
+	    maxEntriesLocalHeap="0"  
+	    eternal="true"  
+	    overflowToDisk="false"  
+	    maxElementsInMemory="100000"
+	    timeToIdleSeconds="0"  
+	    timeToLiveSeconds="0" logging="false">  
+    	 <!--<terracotta clustered="true">
+    	    <nonstop enabled="true" /> 
+    	 </terracotta>-->
+    </defaultCache>  
+	<!-- Set 'maxBytesLocalOffHeap' to the amount of off-heap in-memory 
+  	storage you want to use. This memory is invisible to the Java garbage 
+ 	 collector, providing for gigabytes to terabytes of in-memory data without 
+
+  	garbage collection pauses. --> 
+  	<cache name="userSessionCache"  maxElementsInMemory="100000"
+            eternal="false"  
+            overflowToDisk="false"  
+            timeToIdleSeconds="0"  
+            timeToLiveSeconds="0"  
+            memoryStoreEvictionPolicy="LFU" 
+			logging="false" >
+	       <!-- Include the terracotta element so that the data set will be 
+	    managed as a client of the Terracotta server array.  -->
+  		<!--<terracotta clustered="true">
+    	   <nonstop enabled="true" /> 
+    	 </terracotta>-->
+	
+	 	<!-- Specify where to find the server array configuration. In this 
+	  		case, the configuration is retrieved from the local server. --> 
+	</cache>
+	
+	<cache name="authenticationCache"   maxElementsInMemory="100000"
+            eternal="true"  
+            overflowToDisk="false"  
+            timeToIdleSeconds="0"  
+            timeToLiveSeconds="0"  
+            memoryStoreEvictionPolicy="LFU" 
+			logging="false" >
+		  <!--<terracotta clustered="true">
+    	    <nonstop enabled="true" />
+		  </terracotta>-->
+	</cache>
+	
+	<cache name="authorizationCache"  maxElementsInMemory="100000"
+            eternal="true"  
+            overflowToDisk="false"  
+            timeToIdleSeconds="0"  
+            timeToLiveSeconds="0"  
+            memoryStoreEvictionPolicy="LFU" 
+			logging="false" >
+		 <!--<terracotta clustered="true">
+    	   <nonstop enabled="true" /> 
+    	 </terracotta>-->
+	</cache>
+
+	<cache name="activeSessionCache"  maxElementsInMemory="100000"
+            eternal="true"  
+            overflowToDisk="false"  
+            timeToIdleSeconds="0"  
+            timeToLiveSeconds="0"  
+            memoryStoreEvictionPolicy="LFU" 
+			logging="false" >
+		  <!--<terracotta clustered="true">
+    	    <nonstop enabled="true" />
+		  </terracotta>-->
+	</cache>
+
+	<cache name="expiredLoginStatus"  maxElementsInMemory="10000"
+		   eternal="false"
+		   overflowToDisk="true"
+		   maxElementsOnDisk="100000"
+		   timeToIdleSeconds="1800"
+		   memoryStoreEvictionPolicy="LFU"
+		   logging="false" >
+		<!--<terracotta clustered="true">
+            <nonstop enabled="true" />
+          </terracotta>-->
+	</cache>
+
+	<cache name="sysConfigCache" maxElementsInMemory="100000"
+		   eternal="true"
+		   overflowToDisk="false"
+		   timeToIdleSeconds="0"
+		   timeToLiveSeconds="0"
+		   memoryStoreEvictionPolicy="LFU"
+		   logging="false" >
+		<!--<terracotta clustered="true">
+           <nonstop enabled="true" />
+         </terracotta>-->
+	</cache>
+
+</ehcache>

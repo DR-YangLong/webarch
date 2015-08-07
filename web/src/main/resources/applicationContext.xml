@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/cache  http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="true">
+
+    <description>Spring 配置，by YangLong 410357434@163.com</description>
+
+    <context:component-scan base-package="com.webarch.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <context:annotation-config/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:config proxy-target-class="true"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="order" value="1"/>
+        <property name="locations">
+            <list>
+                <value>classpath*:/application.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- ORM-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="dbType" value="${my.type}"/>
+        <property name="driverClassName" value="${my.jdbc.driver}"/>
+        <property name="url" value="${my.one.url}"/>
+        <property name="username" value="${my.one.username}"/>
+        <property name="password" value="${my.one.password}"/>
+        <property name="defaultAutoCommit" value="false"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
+        <property name="typeAliasesPackage" value="com.webarch.model"/>
+    </bean>
+
+    <bean name="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.webarch.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="annotationClass" value="com.webarch.common.spring.annotation.MyBatisRepository"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- cache -->
+    <cache:annotation-driven/>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcacheManager"/>
+    </bean>
+
+    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache/ehcache.xml"/>
+    </bean>
+    <!-- 可替换 -->
+    <bean id="ehCacheDao" class="com.webarch.common.cache.CacheDao">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <!-- mail and sms -->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.exmail.qq.com"/>
+        <property name="username" value="sysionyangl@sysion.com"/>
+        <property name="password" value="donttouchme1"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+                <prop key="mail.smtp.port">465</prop>
+                <prop key="mail.smtp.socketFactory.port">465</prop>
+                <prop key="mail.smtp.socketFactory.fallback">false</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="validateMailSender" class="com.webarch.common.net.mail.MailSender">
+        <property name="javaMailSender" ref="javaMailSender"/>
+        <property name="sender" value="sysionyangl@sysion.com"/>
+    </bean>
+
+    <bean id="smsSender" class="com.webarch.common.net.sms.YunpianSms">
+        <property name="apiKey" value="发送短信的key"/>
+    </bean>
+
+    <!-- get container bean -->
+    <bean class="com.webarch.common.spring.SpringContextHolder" lazy-init="false"/>
+
+    <!-- 资源国际化-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="cacheSeconds" value="${message.cache_seconds}" />
+        <property name="useCodeAsDefaultMessage" value="true" />
+        <property name="basenames">
+            <list>
+                <value>${message.common_path}</value>
+                <value>${message.shop_path}</value>
+                <value>${message.admin_path}</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+        <property name="defaultLocale" value="${locale}" />
+    </bean>
+
+    <!-- security-->
+    <!--<import resource="applicationContext-shiro.xml"/>-->
+
+    <beans profile="development">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      ignore-unresolvable="true"
+                                      order="2" location="classpath:/development/database.properties"/>
+    </beans>
+
+    <beans profile="production">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      ignore-unresolvable="true"
+                                      order="0" location="classpath:/production/database.properties"/>
+    </beans>
+
+    <beans profile="functional">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      ignore-unresolvable="true"
+                                      order="3" location="classpath:/functional/database.properties"/>
+    </beans>
+</beans>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 自动扫描且只扫描@Controller -->
+	<context:component-scan base-package="com.webarch.*" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters register-defaults="true">
+			<!-- rest for string-->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>text/plain;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<!-- rest for json-->
+			<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">               <!-- init features -->
+				<property name="features">
+					<array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+						<value>DisableCircularReferenceDetect</value>
+						<value>WriteDateUseDateFormat</value>
+					</array>
+				</property>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+						<value>text/plain;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+		<mvc:argument-resolvers>
+			<!-- 用于注解绑定参数的类 -->
+			<bean class="com.webarch.common.spring.binding.CurrentUserHandler"/>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<!-- shiro -->
+	<!-- <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"> <property name="securityManager" 
+		ref="securityManager"/> </bean> -->
+
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+	<!-- file upload-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 5M -->
+		<property name="maxUploadSize" value="5242880" />
+	</bean>
+	<!-- servlet default-->
+	<mvc:default-servlet-handler />
+
+	<!-- contentNegotiation view config -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" />
+		<property name="favorParameter" value="false" />
+		<property name="parameterName" value="format" />
+		<property name="ignoreAcceptHeader" value="false" />
+		<property name="defaultContentType" value="text/plain" />
+		<property name="mediaTypes">
+			<props>
+				<prop key="json">application/json;charset=UTF-8</prop>
+				<prop key="xml">application/xml;charset=UTF-8</prop>
+				<prop key="html">text/html;charset=UTF-8</prop>
+			</props>
+		</property>
+	</bean>
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="0" />
+		<property name="contentNegotiationManager" ref="contentNegotiationManager" />
+		<property name="defaultViews">
+			<list>
+				<bean name="xmlStreamView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="marshaller">
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller" />
+					</property>
+				</bean>
+				<bean name="jsonView" class="com.alibaba.fastjson.support.spring.FastJsonJsonView" />
+			</list>
+		</property>
+	</bean>
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html" />
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="2" />
+	</bean>
+	<bean id="freemarkerConfig" class="com.webarch.common.shiro.ShiroFreemarkTagsConfigurer">
+		<description>Required for Freemarker to work in web tier</description>
+		<property name="configuration" ref="freemarkerConfiguration" />
+	</bean>
+	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<description>Using the Config directly so we can use it outside the
+			web tier
+		</description>
+		<property name="templateLoaderPath" value="/template/" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="tag_syntax">auto_detect</prop>
+				<prop key="template_update_delay">0</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">0.######</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<!-- common mark-->
+				<!--<prop key="auto_import">/default/common/teachingMacros.ftl as tmacro,/default/common/studyingMacros.ftl as
+					smacro,/default/common/commonMacros.ftl as cmacro</prop>-->
+			</props>
+		</property>
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+	<bean id="viewResolverFtl" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"></property>
+		<property name="cache" value="false" />
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+		<property name="requestContextAttribute" value="request" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="order" value="0"></property>
+		<property name="attributesMap" ref="freemarkerStaticModels" />
+	</bean>
+	<!-- method extension-->
+	<bean id="freemarkerStaticModels" class="com.webarch.common.web.FreemarkerStaticModels" factory-method="getInstance">
+		<property name="staticModels" ref="freemarkerStaticModelsProps" />
+	</bean>
+
+	<bean id="freemarkerStaticModelsProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:/freemarker/freemarkerstatic.properties" />
+	</bean>
+
+	<!-- static resource -->
+	<!--<mvc:resources mapping="/resource/css/**" location="/resource/json/" />-->
+
+	<!-- exception mapping -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Throwable">/error/500</prop>
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/500</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>
