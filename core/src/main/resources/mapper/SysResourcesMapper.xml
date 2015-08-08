@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.transfar.greentech.dao.SysResourcesMapper" >
+<mapper namespace="com.webarch.dao.SysResourcesMapper" >
   <resultMap id="BaseResultMap" type="com.webarch.model.SysResources" >
     <!--
       WARNING - @mbggenerated
@@ -143,4 +143,37 @@
       res_status = #{resStatus,jdbcType=CHAR}
     where res_id = #{resId,jdbcType=INTEGER}
   </update>
+
+  <!--一次性查询权限的字符串 -->
+  <resultMap id="PrivilegeResultMap" type="com.webarch.model.PrivilegeModel">
+    <result column="url" property="resUrl" jdbcType="VARCHAR"/>
+    <collection property="roleName" javaType="java.util.ArrayList" ofType="java.lang.String">
+      <result column="role"/>
+    </collection>
+    <collection property="permsName" javaType="java.util.ArrayList" ofType="java.lang.String">
+      <result column="perm"/>
+    </collection>
+  </resultMap>
+  <!-- 查询角色 -->
+  <select id="selectResourceRoles" resultMap="PrivilegeResultMap">
+    SELECT sr.res_url url,role.role_name role,'0' perm
+    FROM sys_resources sr,sys_role role,sys_res_role srr
+    WHERE sr.res_status='0' AND role.role_status='0'
+    AND sr.res_id=srr.res_id AND role.role_id=srr.role_id
+  </select>
+  <!-- 查询权限 -->
+  <select id="selectResourcePerms" resultMap="PrivilegeResultMap">
+    SELECT sr.res_url url,sp.perm_name perm,'0' role
+    FROM sys_resources sr,sys_permission sp,sys_res_perm srp
+    WHERE sr.res_status='0' AND sp.perm_status='0'
+    AND sr.res_id=srp.res_id AND sp.perm_id=srp.perm_id
+  </select>
+  <!--查询角色和权限 -->
+  <select id="selectResourcePris" resultMap="PrivilegeResultMap">
+        SELECT sr.res_url url,role.role_name role,sp.perm_name perm
+          FROM sys_resources sr,sys_role role,sys_permission sp,sys_res_role srr,sys_res_perm srp
+          WHERE sr.res_id=srr.res_id AND role.role_id=srr.role_id
+            AND sr.res_id=srp.res_id AND sp.perm_id=srp.perm_id
+            AND sr.res_status='0' AND role.role_status='0' AND sp.perm_status='0'
+    </select>
 </mapper>

@@ -1,38 +1,24 @@
 package yanglong;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+import com.webarch.common.shiro.dynamic.JdbcPermissionDao;
+import com.webarch.dao.SysResourcesMapper;
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
+import java.util.Map;
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+
+public class AppTest extends BaseTest{
+    @Autowired
+    private SysResourcesMapper resourcesMapper;
+    @Autowired
+    private JdbcPermissionDao jdbcPermissionDao;
+
+    @Test
+    public void testJdbc(){
+        Map<String,String> privileges=jdbcPermissionDao.findDefinitionsMap();
+        Assert.assertNotNull(privileges);
     }
 }
