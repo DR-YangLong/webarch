@@ -3,3 +3,5 @@
 /common/*.iml
 /web/*.iml
 /core/*.iml
+/common/target
+/core/target

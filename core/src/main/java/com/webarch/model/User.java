@@ -8,7 +8,9 @@ public class User {
 
     private String password;
 
-    private Integer roler;
+    private String roles;
+
+    private String perms;
 
     private String status;
     
@@ -36,16 +38,6 @@ public class User {
         this.password = password;
     }
 
-    public Integer getRoler() {
-        return roler;
-    }
-
-    
-    public void setRoler(Integer roler) {
-        this.roler = roler;
-    }
-
-    
     public String getStatus() {
         return status;
     }
@@ -53,5 +45,21 @@ public class User {
     
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
     }
 }

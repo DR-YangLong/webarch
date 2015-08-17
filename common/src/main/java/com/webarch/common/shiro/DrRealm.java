@@ -40,9 +40,9 @@ public class DrRealm extends AuthorizingRealm{
      */
     private static final String DEFAULT_PWD_KEY = "pwd";
     private static final String DEFAULT_IDENTITY_KEY = "id";
-    private static final String DEFAULT_USERSTATUS_KEY = "status";
-    private static final String DEFAULT_USERSFORBIDDEN = "1";
-    private static final String DEFAULT_USERSLOCKED = "2";
+    private static final String DEFAULT_USER_STATUS_KEY = "status";
+    private static final String DEFAULT_USER_FORBIDDEN = "1";
+    private static final String DEFAULT_USER_LOCKED = "2";
     private static final String DEFAULT_ROLES_KEY = "roles";
     private static final String DEFAULT_PERMS_KEY = "perms";
     private static final String DEFAULT_AUTHEN_FILTER="authc";
@@ -66,15 +66,15 @@ public class DrRealm extends AuthorizingRealm{
     /**
      * 用户状态在map中的key
      */
-    private static String user_status_in_map_key = DEFAULT_USERSTATUS_KEY;
+    private static String user_status_in_map_key = DEFAULT_USER_STATUS_KEY;
     /**
      * 账号禁用时匹配的字符串的值
      */
-    private static String user_status_forbidden = DEFAULT_USERSFORBIDDEN;
+    private static String user_status_forbidden = DEFAULT_USER_FORBIDDEN;
     /**
      * 账号锁定时匹配的字符串的值
      */
-    private static String user_status_locked = DEFAULT_USERSLOCKED;
+    private static String user_status_locked = DEFAULT_USER_LOCKED;
     /**
      * 角色在map中的KEY
      */

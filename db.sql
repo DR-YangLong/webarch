@@ -2,8 +2,7 @@
 SQLyog Ultimate v11.25 (64 bit)
 MySQL - 5.6.21-enterprise-commercial-advanced : Database - shiro
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -66,6 +65,8 @@ CREATE TABLE `sys_res_role` (
   CONSTRAINT `FK_Reference_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='系统资源角色分配表';
 
+
+
 /*Table structure for table `sys_resources` */
 
 DROP TABLE IF EXISTS `sys_resources`;
@@ -79,6 +80,7 @@ CREATE TABLE `sys_resources` (
   `res_status` char(1) NOT NULL DEFAULT '0' COMMENT '删除标记，删除1，未删除0',
   PRIMARY KEY (`res_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='系统资源表，存放系统的URL地址';
+
 
 /*Table structure for table `sys_role` */
 
@@ -95,6 +97,7 @@ CREATE TABLE `sys_role` (
   UNIQUE KEY `uq_sys_role_name` (`role_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='系统角色表';
 
+
 /*Table structure for table `user` */
 
 DROP TABLE IF EXISTS `user`;
@@ -103,17 +106,19 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(32) NOT NULL,
   `password` varchar(24) NOT NULL,
-  `status` varchar(1) DEFAULT '0' COMMENT '0启用1禁用',
+  `status` varchar(1) DEFAULT '0' COMMENT '0启用1禁用2锁定',
+  `roles` varchar(64) DEFAULT NULL,
+  `perms` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `sys_resources` */
+/*Data for the table `user` */
+/*Data for the table `sys_res_role` */
+
 insert  into `sys_resources`(`res_id`,`res_url`,`res_creater`,`res_mark`,`res_time`,`res_status`) values (1,'/login.jsp',NULL,'登陆页',NULL,'0'),(2,'/shiro/login',NULL,'登陆',NULL,'0');
 insert  into `sys_role`(`role_id`,`role_name`,`role_mark`,`role_creater`,`role_createtime`,`role_status`) values (1,'admin','系统管理员',NULL,NULL,'0'),(2,'roler1','第一个角色',NULL,NULL,'0'),(3,'roler2','第二个角色',NULL,NULL,'1');
 insert  into `sys_res_role`(`id`,`res_id`,`role_id`) values (1,1,3),(2,2,1),(3,2,2),(4,2,3);
-
-/*Data for the table `user` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
