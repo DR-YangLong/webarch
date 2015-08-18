@@ -10,7 +10,7 @@
     <artifactId>web</artifactId>
     <packaging>war</packaging>
 
-    <name>web Maven Webapp</name>
+    <name>web</name>
     <url>https://github.com/DR-YangLong</url>
     <description>controller layer</description>
 

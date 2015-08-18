@@ -21,7 +21,6 @@ import java.util.Set;
 /**
  * 功能或描述：缓存DAO
  *
- * @Package com.shiro.distribution
  * @Author: DR.YangLong
  * @Date: 14-9-30
  * @Time: 上午10:06

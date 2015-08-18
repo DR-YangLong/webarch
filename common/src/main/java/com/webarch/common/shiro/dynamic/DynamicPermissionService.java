@@ -18,7 +18,6 @@ package com.webarch.common.shiro.dynamic;
 import java.util.Map;
 
 /**
- * com.shiro
  * functional describe:动态权限配置Service
  *
  * @author DR.YangLong [410357434@163.com]

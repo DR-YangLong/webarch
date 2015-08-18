@@ -21,7 +21,6 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
- * package:shiroexample.common.shiro.authentication</br>
  * functional describe:凭证对比处理器,密码使用MD5
  * {@see org.apache.commons.codec.digest.DigestUtils.md5Hex(String data)}
  * 加密存入数据库

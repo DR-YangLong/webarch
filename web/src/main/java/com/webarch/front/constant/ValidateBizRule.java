@@ -1,7 +1,7 @@
-package com.webarch.constant;
+package com.webarch.front.constant;
 
 /**
- * package: com.webarch.constant <br/>
+ * package: com.webarch.front.constant <br/>
  * functional describe:
  *
  * @author DR.YangLong [410357434@163.com]

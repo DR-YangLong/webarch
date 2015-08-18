@@ -22,7 +22,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import java.io.IOException;
 
 /**
- * com.up360.extension.security.shiro
  * functional describe:shiro freemark标签 https://github.com/jagregory/shiro-freemarker-tags
  *
  * @author DR.YangLong

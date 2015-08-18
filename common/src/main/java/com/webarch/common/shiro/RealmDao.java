@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * package:shiroexample.common.shiro.authentication
  * functional describe:realm获取用户认证信息，授权信息的service接口
  * 此方法为Reaml提供信息，MAP中key需要自定义或使用默认{@see DrRealm}
  *

@@ -26,7 +26,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * package: com.dr.architecture.common.spring.binding <br/>
  * blog:<a href="http://dr-yanglong.github.io/">dr-yanglong.github.io</a><br/>
  * <p/>
  * functional describe:get user object from session and binding to parameter.<br/>

@@ -24,7 +24,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 /**
  * 功能或描述：分布式缓存redis实现
  *
- * @Package com.shiro.distribution.redis
  * @Author: DR.YangLong
  * @Date: 14-9-30
  * @Time: 上午11:27

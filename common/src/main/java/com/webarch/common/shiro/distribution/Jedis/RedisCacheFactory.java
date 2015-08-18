@@ -20,7 +20,6 @@ import com.webarch.common.shiro.distribution.DistributeCache;
 import com.webarch.common.shiro.distribution.DistributeCacheFactory;
 
 /**
- * shiroexample.common.shiro.distribution.Jedis
  * functional describe:Jedis缓存工厂类
  *
  * @author DR.YangLong [410357434@163.com]

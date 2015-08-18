@@ -16,12 +16,9 @@
 
 package com.webarch.common.spring.annotation;
 
-import org.springframework.stereotype.Component;
-
 import java.lang.annotation.*;
 
 /**
- * package: com.dr.architecture.common.spring <br/>
  * blog:<a href="http://dr-yanglong.github.io/">dr-yanglong.github.io</a><br/>
  * <p/>
  * functional describe:use this annotation to biding user object to controller's parameter<br/>

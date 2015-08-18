@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * shiroexample.common.shiro.distribution.Jedis
  * functional describe:Jedis缓存类
  *
  * @author DR.YangLong [410357434@163.com]

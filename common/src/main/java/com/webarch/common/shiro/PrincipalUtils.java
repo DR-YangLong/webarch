@@ -8,7 +8,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 /**
- * package: com.transfar.greentech.common.shiro </br>
  * functional describe:shiro获取身份标识的工具
  *
  * @author DR.YangLong [410357434@163.com]

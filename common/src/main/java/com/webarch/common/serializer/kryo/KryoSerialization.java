@@ -30,7 +30,6 @@ import java.io.IOException;
 
 
 /**
- * com.shiro.distribution.redis
  * functional describe:Kryo实现的Redis序列化器
  *
  * @author DR.YangLong [410357434@163.com]

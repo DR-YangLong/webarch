@@ -17,7 +17,7 @@
 package com.webarch.common.constant;
 
 /**
- * package:com.transfar.greentech.common.constant</br>
+ * package:common.constant<br/>
  * functional describe:API接口常量
  *
  * @author DR.YangLong [410357434@163.com]

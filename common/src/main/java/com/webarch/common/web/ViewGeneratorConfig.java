@@ -5,13 +5,14 @@
 package com.webarch.common.web;
 
 /**
- * package:com.transfar.greentech.common.web
+ * package:common.web
  * functional describe:视图配置文件，视图存放目录如下(如使用FreeMarker,Velocity等模板引擎需考虑引擎配置):
- * +WEB-RROT
+ * +WEB-ROOT
  * ---+VIEW_ROOT_NAME
  * -----+PROJECT_NAME
  * -------+MODULE_NAME
  * ---------+VIEW_FILE
+ * ===> /webapp/default/PROJECT_NAME/MODULE_NAME/{methodName.ftl}
  * 对应视图控制器：系统前缀（org.apache）.PROJECT_NAME.web.MODULE_NAME.xxController
  * @author DR.YangLong [410357434@163.com]
  * @version 1.0 2015/5/19 9:44

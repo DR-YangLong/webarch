@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * package:shiroexample.common.net.http
+ * package:common.net.http
  * functional describe:提供各种数据返回形式post，get的http请求方法
  * 基础方法为<code>String doHttp*</code>方法
  *

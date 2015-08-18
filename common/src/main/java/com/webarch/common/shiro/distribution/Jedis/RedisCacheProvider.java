@@ -25,7 +25,6 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.util.Properties;
 
 /**
- * shiroexample.common.shiro.distribution.Jedis
  * functional describe:使用Jedis提供连接池，默认1个redis实例，redis部署采用双主热备，keepalive方案避免单点。
  * 使用载入classpath下的redis.properties文件来获取参数,
  * 配置文件的key值需要与Jedis配置的参数名保持一致

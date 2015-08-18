@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 
 /**
- * package:shiroexample.common.io
+ * package:common.io
  * functional describe:文件读写工具类
  *
  * @author DR.YangLong [410357434@163.com]

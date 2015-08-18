@@ -1,6 +1,3 @@
-<#--
-  ~ Copyright (c) 2015 传化科技服务有限公司(Transfar Group) All rights reserved
-  -->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">

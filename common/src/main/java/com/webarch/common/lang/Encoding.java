@@ -16,7 +16,7 @@
 package com.webarch.common.lang;
 
 /**
- * package:shiroexample.common.lang
+ * package:common.lang
  * functional describe:字符串编码相关工具类
  *
  * @author DR.YangLong [410357434@163.com]

@@ -18,7 +18,6 @@ package com.webarch.common.shiro.dynamic;
 import java.util.LinkedHashMap;
 
 /**
- * com.shiro
  * functional describe:基于数据库实现的权限获取
  *
  * @author DR.YangLong [410357434@163.com]

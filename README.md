@@ -2,7 +2,7 @@
 一个J2EE开发框架整合演示Demo。
 ### 技术选型
 #### 主要框架
-> MyBatis,Spring FrameWork,Spring mvc,Apache Shiro,freemarker
+> MyBatis,Spring Framework,Spring mvc,Apache Shiro,Freemarker
 
 #### 数据相关
 > Druid,MySQL,Redis,MongoDB

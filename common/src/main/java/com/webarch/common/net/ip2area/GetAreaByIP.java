@@ -43,13 +43,28 @@ public class GetAreaByIP {
      * @return ip
      */
     public static String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("X-Real-IP");
+        return getIpAddress(request,"X-Real-IP");
+    }
+
+    /**
+     * 获取真实IP，需要根据请求头中的ip名称
+     * @param request request
+     * @param headerName ip地址在请求头中的名称
+     * @return ip
+     */
+    public static String getIpAddress(HttpServletRequest request,String headerName){
+        String ip = request.getHeader(headerName);
         if (ip == null || ip == "") {
             ip = request.getRemoteAddr();
         }
         return ip;
     }
 
+    /***
+     * 使用淘宝地址库查询IP物理地址
+     * @param ip ip
+     * @return AreaDomain
+     */
     public static AreaDomain getUserAreaByIP(final String ip) {
         AreaDomain areaDomain  = null;
 		try {

@@ -23,7 +23,6 @@ import org.apache.shiro.cache.CacheException;
 /**
  * 功能或描述：分布式缓存管理器
  *
- * @Package com.shiro.distribution
  * @Author: DR.YangLong
  * @Date: 14-9-30
  * @Time: 上午9:29

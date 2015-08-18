@@ -5,7 +5,7 @@
 package com.webarch.common.constant;
 
 /**
- * package: com.transfar.greentech.constant </br>
+ * package:common.constant<br/>
  * functional describe:验证码规则定义
  *
  * @author DR.YangLong [410357434@163.com]

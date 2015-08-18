@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * com.shiro.distribution.redis
+ *
  * functional describe:FastJson序列化器
  *
  * @author DR.YangLong [410357434@163.com]

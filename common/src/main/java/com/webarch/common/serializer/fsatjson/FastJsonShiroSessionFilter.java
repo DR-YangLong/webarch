@@ -18,7 +18,7 @@ package com.webarch.common.serializer.fsatjson;
 import com.alibaba.fastjson.serializer.PropertyFilter;
 
 /**
- * com.shiro.distribution.redis
+ *
  * functional describe:FastJson过滤器，被设置的属性将在序列化和反序列化时放弃
  *
  * @author DR.YangLong [410357434@163.com]

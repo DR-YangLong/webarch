@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * package:com.transfar.greentech.common.shiro</br>
  * functional describe:
  *
  * @author DR.YangLong [410357434@163.com]

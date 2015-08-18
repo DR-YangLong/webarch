@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * package: com.transfar.greentech.common.net.sms </br>
+ * package: common.net.sms </br>
  * functional describe:发送短信，使用云片接口
  *
  * @author DR.YangLong [410357434@163.com]

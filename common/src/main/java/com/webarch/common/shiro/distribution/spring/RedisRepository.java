@@ -31,7 +31,6 @@ import java.util.regex.Pattern;
 /**
  * 功能或描述：redis cache dao
  *
- * @Package com.shiro.distribution.redis
  * @Author: DR.YangLong
  * @Date: 14-9-30
  * @Time: 上午10:13

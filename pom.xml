@@ -12,7 +12,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <name>com.webarch</name>
+    <name>webarch</name>
     <url>https://github.com/DR-YangLong</url>
 
     <description>
@@ -622,7 +622,7 @@
         </dependencies>
     </dependencyManagement>
     <build>
-        <finalName>com.webarch</finalName>
+        <finalName>webarch</finalName>
         <pluginManagement>
             <plugins>
                 <!-- install插件 -->

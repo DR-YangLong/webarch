@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * package:shiroexample.common.shiro.authentication</br>
  * functional describe:查询用户授权及认证信息
  *
  * @author DR.YangLong [410357434@163.com]

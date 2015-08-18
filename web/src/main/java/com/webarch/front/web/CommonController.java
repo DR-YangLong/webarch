@@ -1,7 +1,7 @@
-package com.webarch.web;
+package com.webarch.front.web;
 
 import com.webarch.common.io.img.ValidateImg;
-import com.webarch.constant.ValidateBizRule;
+import com.webarch.front.constant.ValidateBizRule;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * package: com.webarch.web <br/>
+ * package: com.webarch.front.web <br/>
  * functional describe:通用控制器
  *
  * @author DR.YangLong [410357434@163.com]
@@ -27,7 +27,7 @@ public class CommonController {
     private static final Logger logger= LoggerFactory.getLogger(CommonController.class);
     /**
      * 获取验证码图片
-     * <code>ruleName</code> is {@link com.webarch.constant.ValidateBizRule}
+     * <code>ruleName</code> is {@link com.webarch.front.constant.ValidateBizRule}
      *
      * @param response 响应对象
      */

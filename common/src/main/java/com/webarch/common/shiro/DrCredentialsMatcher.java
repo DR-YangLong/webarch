@@ -23,7 +23,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
 /**
- * package:com.transfar.greentech.common.shiro</br>
  * functional describe:凭证匹配器，从登陆信息和认证信息中获取密码进行匹配
  *
  * @author DR.YangLong [410357434@163.com]

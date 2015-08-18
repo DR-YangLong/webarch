@@ -18,7 +18,6 @@ package com.webarch.common.shiro.dynamic;
 import java.util.Map;
 
 /**
- * com.shiro
  * functional describe:动态权限资源获取DAO接口,根据自己需要实现，
  * 从文件/数据库来加载权限map<ant url,comma-delimited chain definition>
  *

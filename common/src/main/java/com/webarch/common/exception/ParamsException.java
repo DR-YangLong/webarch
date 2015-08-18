@@ -17,7 +17,7 @@
 package com.webarch.common.exception;
 
 /**
- * package:com.transfar.greentech.common.exception</br>
+ * package:common.exception<br/>
  * functional describe:参数异常
  *
  * @author DR.YangLong [410357434@163.com]

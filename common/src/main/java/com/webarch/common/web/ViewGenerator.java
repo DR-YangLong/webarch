@@ -165,6 +165,10 @@ public class ViewGenerator {
      * eg:
      * 有一个视图不再自动生成对应目录下，可以使用
      * new ViewGeneratorConfig("","","","/mypath/define/real/fileName")
+     * ==》 /default/mypath/define/ral/fileName.ftl
+     * 也可以使用
+     * new ViewGeneratorConfig("mypath","define","real","fileName")
+     * ==》 /default/mypath/define/ral/fileName.ftl
      *
      * @param config 配置项
      * @return 视图

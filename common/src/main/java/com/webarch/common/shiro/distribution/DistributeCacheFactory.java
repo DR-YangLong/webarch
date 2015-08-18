@@ -18,7 +18,6 @@ package com.webarch.common.shiro.distribution;
 /**
  * 功能或描述：分布式cache工场
  *
- * @Package com.shiro.distribution
  * @Author: DR.YangLong
  * @Date: 14-9-30
  * @Time: 上午10:05

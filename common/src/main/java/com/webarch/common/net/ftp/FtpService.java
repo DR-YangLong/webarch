@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 
 /**
- * package: com.transfar.greentech.common.net.ftp </br>
+ * package: common.net.ftp </br>
  * functional describe:Ftp服务，ftp文件上传下载
  *
  * @author DR.YangLong [410357434@163.com]
