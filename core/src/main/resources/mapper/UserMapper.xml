@@ -22,13 +22,13 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.webarch.model.User" >
+  <insert id="insert" parameterType="com.webarch.model.User" useGeneratedKeys="true" keyProperty="id">
     insert into user (id, username, password, 
       roles,perms, status)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{roles,jdbcType=VARCHAR}, #{perms,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.webarch.model.User" >
+  <insert id="insertSelective" parameterType="com.webarch.model.User" useGeneratedKeys="true" keyProperty="id">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

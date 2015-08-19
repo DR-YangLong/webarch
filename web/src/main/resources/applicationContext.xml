@@ -13,20 +13,26 @@
 
     <description>Spring 配置，by YangLong 410357434@163.com</description>
 
+    <!-- 配置扫描的范围 -->
     <context:component-scan base-package="com.webarch.*">
+        <!-- controller的扫描放到MVC配置文件中，在此去除，通常报对象重复时检查所有配置文件的扫描配置是否重复 -->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
+    <!-- 如果加载prop文件报错，注意此处的值 -->
     <context:annotation-config/>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <aop:config proxy-target-class="true"/>
 
+    <!-- 加载全局文件 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <!-- 如果加载prop文件报错，注意此处的值 -->
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <!-- 如果加载prop文件报错，注意此处的值 -->
         <property name="order" value="1"/>
         <property name="locations">
             <list>
@@ -36,6 +42,7 @@
     </bean>
 
     <!-- ORM-->
+    <!-- 配置数据源-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="dbType" value="${my.type}"/>
         <property name="driverClassName" value="${my.jdbc.driver}"/>
@@ -45,29 +52,43 @@
         <property name="defaultAutoCommit" value="false"/>
     </bean>
 
+    <!-- 配置MyBatis XML文件位置及实体类位置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <!-- XML文件位置 -->
         <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
+        <!-- 实体类位置，将会把SimpleClassName作为MyBatis中resultType的别名 -->
         <property name="typeAliasesPackage" value="com.webarch.model"/>
     </bean>
 
+    <!-- 配置MyBatis DAO接口位置，Spring将会动态生成接口实现并通过IOC在使用时注入 -->
     <bean name="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- dao接口位置 -->
         <property name="basePackage" value="com.webarch.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 支持自定义注解标识接口，如果有，将只会将有此注解的接口作为MyBatis接口来处理 -->
         <property name="annotationClass" value="com.webarch.common.spring.annotation.MyBatisRepository"/>
     </bean>
 
+    <!-- 定义事务处理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!-- 事务注解支持 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+    <!-- 数据验证，使用hibernate，并使用message resources-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <!-- spring默认使用的验证器 -->
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 不设置将会使用classpath下的 ValidationMessages_zh_CN.properties -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
 
-    <!-- cache -->
+    <!-- cache注解支持 -->
     <cache:annotation-driven/>
-
+    <!-- EhCache配置 -->
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcacheManager"/>
     </bean>
@@ -106,18 +127,20 @@
         <property name="apiKey" value="发送短信的key"/>
     </bean>
 
-    <!-- get container bean -->
+    <!-- get container bean，在Context init的时候将IOC容器中的bean同时保存 -->
     <bean class="com.webarch.common.spring.SpringContextHolder" lazy-init="false"/>
 
     <!-- 资源国际化-->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="cacheSeconds" value="${message.cache_seconds}" />
         <property name="useCodeAsDefaultMessage" value="true" />
+        <property name="fileEncodings" value="utf-8"/>
         <property name="basenames">
             <list>
                 <value>${message.common_path}</value>
                 <value>${message.shop_path}</value>
                 <value>${message.admin_path}</value>
+                <value>${message.validate_path}</value>
             </list>
         </property>
     </bean>

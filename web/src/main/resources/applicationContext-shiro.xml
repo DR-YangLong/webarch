@@ -12,8 +12,10 @@
 
     <description>Shiro安全配置，By YangLong 410357434@163.com</description>
 
+    <!-- 自定义凭证匹配器 -->
     <bean id="credentialsMatcher" class="com.webarch.common.shiro.DrCredentialsMatcher"/>
 
+    <!-- 自定义realm实现 -->
     <bean id="userRealm" class="com.webarch.common.shiro.DrRealm">
         <property name="realmDao" ref="realmDao"/>
         <property name="name" value="drRealm"/>
@@ -26,42 +28,53 @@
         <property name="cacheManager" ref="shiroCacheManager"/>
     </bean>
 
+    <!-- session保存的cookie类型 -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg name="name" value="${session.name}"/>
         <property name="domain" value="${domain.name}"/>
         <property name="httpOnly" value="false"/>
-        <!-- second,explore close -->
+        <!-- second,explore close，单位秒，-1为浏览器进程 -->
         <property name="maxAge" value="-1"/>
         <property name="path" value="/"/>
     </bean>
 
+    <!-- 记住我保存的cookie类型 -->
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- 在请求中的参数名 -->
         <constructor-arg value="rememberMe"/>
         <property name="httpOnly" value="true"/>
-        <!-- 7 days -->
+        <!-- 7 days，单位秒 -->
         <property name="maxAge" value="604800"/>
     </bean>
 
+    <!-- 记住我管理器，将会自动从cookie中获取相应信息进行登录认证 -->
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <!-- 加密的key -->
         <property name="cipherKey"
                   value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}"/>
+        <!-- cookie类型 -->
         <property name="cookie" ref="rememberMeCookie"/>
     </bean>
 
+    <!-- shiro的缓存管理器，可换为自定义实现，需要实现shiro的CacheManager -->
     <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManager" ref="ehcacheManager"/>
     </bean>
 
+    <!-- 回话持久实现，可换为自定义实现，将session信息存储到想存的位置，需要继承CachingSessionDAO类 -->
     <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <!-- session在缓存中的cache名称-->
         <property name="activeSessionsCacheName" value="activeSessionCache"/>
         <property name="cacheManager" ref="shiroCacheManager"/>
     </bean>
 
+    <!-- 回话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <property name="sessionDAO" ref="sessionDAO"/>
+        <!-- 是否使用cookie传递sessionId-->
         <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
-        <!-- millsecond -->
+        <!-- millsecond，单位毫秒，服务器端session过期时间 -->
         <property name="globalSessionTimeout" value="1800000"/>
     </bean>
 
