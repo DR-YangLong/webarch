@@ -471,7 +471,7 @@ public class HttpService {
                     inputStream.close();
                 } catch (IOException e) {
                     logger.error("关闭输入出错！",e);
-;                }
+                }
             }
             if(outputStream!=null){
                 try {
