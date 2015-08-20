@@ -17,6 +17,7 @@
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
 
+	<!-- restful -->
 	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
 		<mvc:message-converters register-defaults="true">
 			<!-- rest for string-->
@@ -64,6 +65,7 @@
 		<!-- 5M -->
 		<property name="maxUploadSize" value="5242880" />
 	</bean>
+
 	<!-- servlet default-->
 	<mvc:default-servlet-handler />
 
@@ -96,6 +98,8 @@
 			</list>
 		</property>
 	</bean>
+
+	<!-- jsp -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="contentType" value="text/html" />
@@ -103,10 +107,13 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="2" />
 	</bean>
+
+	<!-- freemarker -->
 	<bean id="freemarkerConfig" class="com.webarch.common.shiro.ShiroFreemarkTagsConfigurer">
 		<description>Required for Freemarker to work in web tier</description>
 		<property name="configuration" ref="freemarkerConfiguration" />
 	</bean>
+
 	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<description>Using the Config directly so we can use it outside the
 			web tier
@@ -125,9 +132,8 @@
 				<prop key="time_format">HH:mm:ss</prop>
 				<prop key="number_format">0.######</prop>
 				<prop key="whitespace_stripping">true</prop>
-				<!-- common mark-->
-				<!--<prop key="auto_import">/default/common/teachingMacros.ftl as tmacro,/default/common/studyingMacros.ftl as
-					smacro,/default/common/commonMacros.ftl as cmacro</prop>-->
+				<!-- 宏配置。common mark and file，自动导入的通用模版，可以使用-->
+				<prop key="auto_import">/template/common/header.ftl as header,/template/common/spring.ftl as spring</prop>
 			</props>
 		</property>
 		<property name="defaultEncoding" value="utf-8" />
@@ -148,20 +154,21 @@
 	<bean id="freemarkerStaticModels" class="com.webarch.common.web.FreemarkerStaticModels" factory-method="getInstance">
 		<property name="staticModels" ref="freemarkerStaticModelsProps" />
 	</bean>
-
+	<!-- freemarker扩展方法类配置文件的位置 -->
 	<bean id="freemarkerStaticModelsProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="location" value="classpath:/freemarker/freemarkerstatic.properties" />
 	</bean>
 
-	<!-- static resource -->
+	<!-- static resource，静态资源映射，使静态资源不经过mvc的handler -->
 	<!--<mvc:resources mapping="/resource/css/**" location="/resource/json/" />-->
 
-	<!-- exception mapping -->
+	<!-- exception mapping，异常封装，将特定异常 -->
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!-- 异常映射，key异常类，value为视图名，将自动生成ModelAndView对象，然后进入视图解析渲染阶段-->
 		<property name="exceptionMappings">
 			<props>
-				<prop key="java.lang.Throwable">/error/500</prop>
 				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/500</prop>
+				<prop key="java.lang.Throwable">/error/500</prop>
 			</props>
 		</property>
 	</bean>

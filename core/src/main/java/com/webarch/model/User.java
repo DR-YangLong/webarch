@@ -1,13 +1,24 @@
 package com.webarch.model;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class User {
     
     private Integer id;
-
+    @NotNull
+    @Length(min = 16,max = 36)
+    @Pattern(regexp = "[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")
     private String username;
 
+    @NotNull
+    @Length(min=6,max=32)
+    @Pattern(regexp = "[\\w]+[!@#$%&*]||[\\w]+")
     private String password;
 
+    @NotNull(message = "{user.role.notempty}")
     private String roles;
 
     private String perms;

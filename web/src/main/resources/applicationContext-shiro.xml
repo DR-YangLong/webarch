@@ -90,6 +90,7 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
 
+    <!-- filter工厂-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/sso/login"/>
@@ -112,6 +113,7 @@
              </value>
          </property>-->
     </bean>
+
     <!-- 动态权限资源配置-->
     <bean id="filterChainDefinitionsFactory" class="com.webarch.common.shiro.dynamic.DynamicPermissionServiceImpl">
         <property name="dynamicPermissionDao" ref="jdbcPermissionDao"/>

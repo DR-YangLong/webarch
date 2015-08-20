@@ -149,7 +149,7 @@
     </bean>
 
     <!-- security-->
-    <!--<import resource="applicationContext-shiro.xml"/>-->
+    <import resource="applicationContext-shiro.xml"/>
 
     <beans profile="development">
         <context:property-placeholder ignore-resource-not-found="true"
