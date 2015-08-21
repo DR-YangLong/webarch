@@ -450,7 +450,8 @@ public class HttpService {
             if(!outFile.exists()){
                 outFile.mkdirs();
             }
-            outFile=new File(file);
+            localPath+=file;
+            outFile=new File(localPath);
             if(!outFile.exists()){
                 outFile.createNewFile();
             }
