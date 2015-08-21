@@ -45,6 +45,7 @@
 					</list>
 				</property>
 			</bean>
+			<!-- 要实现jsonp的转换，那么就需要继承fastjson的转换器，将json格式改为jsonp的格式-->
 		</mvc:message-converters>
 		<mvc:argument-resolvers>
 			<!-- 用于注解绑定参数的类 -->
@@ -81,6 +82,7 @@
 				<prop key="json">application/json;charset=UTF-8</prop>
 				<prop key="xml">application/xml;charset=UTF-8</prop>
 				<prop key="html">text/html;charset=UTF-8</prop>
+				<prop key="jsonp">application/jsonp;charset=UTF-8;</prop>
 			</props>
 		</property>
 	</bean>
@@ -89,11 +91,22 @@
 		<property name="contentNegotiationManager" ref="contentNegotiationManager" />
 		<property name="defaultViews">
 			<list>
+				<!-- jsonp支持 -->
+				<bean name="jsonpView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+					<property name="jsonpParameterNames">
+						<set>
+							<value>jsonp</value>
+							<value>callback</value>
+						</set>
+					</property>
+				</bean>
+				<!-- xml支持 -->
 				<bean name="xmlStreamView" class="org.springframework.web.servlet.view.xml.MarshallingView">
 					<property name="marshaller">
 						<bean class="org.springframework.oxm.xstream.XStreamMarshaller" />
 					</property>
 				</bean>
+				<!-- json支持 -->
 				<bean name="jsonView" class="com.alibaba.fastjson.support.spring.FastJsonJsonView" />
 			</list>
 		</property>
@@ -138,6 +151,7 @@
 		</property>
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
+
 	<bean id="viewResolverFtl" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"></property>
 		<property name="cache" value="false" />
