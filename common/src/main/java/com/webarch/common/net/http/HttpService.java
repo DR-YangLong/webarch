@@ -417,7 +417,7 @@ public class HttpService {
      * @param url 地址
      * @param localPath 地址
      * @param fileName 文件名称
-     * @return null/本地文件路径
+     * @return null/本地文件名，不带路径
      */
     public static String downloadFile(String url,String localPath,String fileName){
         int bufferSize=1024*10;
@@ -445,7 +445,7 @@ public class HttpService {
                 return file;
             }
             inputStream=entity.getContent();
-            file=localPath+fileName+"."+fileType;
+            file=fileName+"."+fileType;
             File outFile=new File(localPath);
             if(!outFile.exists()){
                 outFile.mkdirs();
