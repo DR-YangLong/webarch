@@ -17,6 +17,47 @@
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<!-- 如果加载prop文件报错，注意此处的值 -->
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+		<!-- 如果加载prop文件报错，注意此处的值 -->
+		<property name="order" value="5"/>
+		<property name="locations">
+			<list>
+				<value>classpath*:/message.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 注解验证-->
+	<mvc:annotation-driven validator="validator" />
+
+	<!-- 数据验证，使用hibernate，并使用message resources-->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<!-- spring默认使用的验证器 -->
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+		<!-- 不设置将会使用classpath*下的相关配置文件-->
+		<property name="validationMessageSource" ref="messageSource"/>
+	</bean>
+
+	<!-- 资源国际化-->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="${message.cache_seconds}" />
+		<property name="useCodeAsDefaultMessage" value="false" />
+		<property name="fileEncodings" value="utf-8"/>
+		<property name="basenames">
+			<list>
+				<value>${message.validate_path}</value>
+				<value>${message.common_path}</value>
+				<value>${message.shop_path}</value>
+				<value>${message.admin_path}</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+		<property name="defaultLocale" value="${locale}" />
+	</bean>
 	<!-- restful -->
 	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
 		<mvc:message-converters register-defaults="true">
@@ -145,8 +186,8 @@
 				<prop key="time_format">HH:mm:ss</prop>
 				<prop key="number_format">0.######</prop>
 				<prop key="whitespace_stripping">true</prop>
-				<!-- 宏配置。common mark and file，自动导入的通用模版，可以使用-->
-				<prop key="auto_import">/template/common/header.ftl as header,/template/common/spring.ftl as spring</prop>
+				<!-- 宏配置。common mark and file，自动导入的通用模版，可以使用[@header]调用通用模板，模板位置相对templateLoaderPath-->
+				<prop key="auto_import">common/header.ftl as header,common/spring.ftl as spring</prop>
 			</props>
 		</property>
 		<property name="defaultEncoding" value="utf-8" />
@@ -161,7 +202,7 @@
 		<property name="exposeSpringMacroHelpers" value="true" />
 		<property name="exposeRequestAttributes" value="true" />
 		<property name="exposeSessionAttributes" value="true" />
-		<property name="order" value="0"></property>
+		<property name="order" value="1"></property>
 		<property name="attributesMap" ref="freemarkerStaticModels" />
 	</bean>
 	<!-- method extension-->

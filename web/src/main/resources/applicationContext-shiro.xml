@@ -14,7 +14,7 @@
 
     <!-- 自定义凭证匹配器 -->
     <bean id="credentialsMatcher" class="com.webarch.common.shiro.DrCredentialsMatcher"/>
-
+    <bean id="realmDao" class="com.webarch.core.RealDaoImpl"/>
     <!-- 自定义realm实现 -->
     <bean id="userRealm" class="com.webarch.common.shiro.DrRealm">
         <property name="realmDao" ref="realmDao"/>

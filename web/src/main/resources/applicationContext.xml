@@ -78,14 +78,6 @@
     <!-- 事务注解支持 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-    <!-- 数据验证，使用hibernate，并使用message resources-->
-    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-        <!-- spring默认使用的验证器 -->
-        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
-        <!-- 不设置将会使用classpath下的 ValidationMessages_zh_CN.properties -->
-        <property name="validationMessageSource" ref="messageSource"/>
-    </bean>
-
     <!-- cache注解支持 -->
     <cache:annotation-driven/>
     <!-- EhCache配置 -->
@@ -129,24 +121,6 @@
 
     <!-- get container bean，在Context init的时候将IOC容器中的bean同时保存 -->
     <bean class="com.webarch.common.spring.SpringContextHolder" lazy-init="false"/>
-
-    <!-- 资源国际化-->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="cacheSeconds" value="${message.cache_seconds}" />
-        <property name="useCodeAsDefaultMessage" value="true" />
-        <property name="fileEncodings" value="utf-8"/>
-        <property name="basenames">
-            <list>
-                <value>${message.common_path}</value>
-                <value>${message.shop_path}</value>
-                <value>${message.admin_path}</value>
-                <value>${message.validate_path}</value>
-            </list>
-        </property>
-    </bean>
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
-        <property name="defaultLocale" value="${locale}" />
-    </bean>
 
     <!-- security-->
     <import resource="applicationContext-shiro.xml"/>

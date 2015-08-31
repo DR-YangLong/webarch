@@ -17,7 +17,6 @@ import java.util.*;
  * @author DR.YangLong [410357434@163.com]
  * @version 1.0    2015/8/9 16:16
  */
-@Component
 public class RealDaoImpl implements RealmDao{
     @Autowired
     private UserMapper userMapper;

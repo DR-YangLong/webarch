@@ -12,17 +12,17 @@
     <#--验证的属性值-->
     <@spring.bind "user.username" />
     <#--错误信息-->
-    <@spring.showErrors "<br/>"/>
+    <@spring.showErrors "<br>"/>
 </#if>
-    密码：<input type="password" value="${(user.password)!}" name="password" maxlength="36"><br/>
+   密码：<input type="password" value="${(user.password)!}" name="password" maxlength="36"><br/>
 <#if user??>
     <@spring.bind "user.password" />
-    <@spring.showErrors "<br/>"/>
+    <@spring.showErrors "<br>"/>
 </#if>
     角色：<input type="text" value="${(user.roles)!}" name="roles"><br/>
 <#if user??>
     <@spring.bind "user.roles" />
-    <@spring.showErrors "<br/>"/>
+    <@spring.showErrors "<br>"/>
 </#if>
     <input type="submit" value="注册">
 </form>

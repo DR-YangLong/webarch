@@ -1,24 +1,21 @@
 package com.webarch.model;
 
-import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class User {
     
     private Integer id;
-    @NotNull
-    @Length(min = 16,max = 36)
-    @Pattern(regexp = "[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")
+
+    @Email(message = "{register.user.username}")
     private String username;
 
-    @NotNull
-    @Length(min=6,max=32)
-    @Pattern(regexp = "[\\w]+[!@#$%&*]||[\\w]+")
+    @Pattern(regexp = "[\\w!@#$%&*]{6,32}",message = "{register.user.password}")
     private String password;
 
-    @NotNull(message = "{user.role.notempty}")
+    @NotEmpty(message = "{register.user.role}")
     private String roles;
 
     private String perms;

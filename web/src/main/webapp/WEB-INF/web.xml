@@ -6,7 +6,7 @@
         version="3.0"
         metadata-complete="true">
 
-    <display-name>myweb</display-name>
+    <display-name>web</display-name>
 
     <!-- Spring配置文件开始  -->
     <context-param>
@@ -92,6 +92,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>/index</welcome-file>
     </welcome-file-list>
 </web-app>

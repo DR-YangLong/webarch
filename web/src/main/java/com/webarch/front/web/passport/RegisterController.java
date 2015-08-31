@@ -29,6 +29,12 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/index")
+    public ModelAndView regIndex(){
+        ModelAndView modelAndView=ViewGenerator.getModelAndView();
+        return modelAndView;
+    }
+
     /**
      * 使用自动验证数据
      *
@@ -37,10 +43,10 @@ public class RegisterController {
      * @return
      */
     @RequestMapping("/reg")
-    public ModelAndView register(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView regIndex(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = ViewGenerator.getModelAndView();
         if (bindingResult.hasErrors()) {//验证出错
-            modelAndView.setViewName("/front/passport/regIndex");
+            //TODO 出错的逻辑
         } else {
             if("410357434@163.com".equals(user.getUsername())){//用户已注册
                 //手动注入验证错误信息
@@ -50,9 +56,9 @@ public class RegisterController {
                     userService.insertUser(user);
                     modelAndView.addObject("User", user);
                     //TODO 自动登录
+                    modelAndView.setViewName("/index");
                 } catch (Exception e) {
                     log.error("insert user to db error!obj:" + JSON.toJSONString(user), e);
-                    modelAndView.setViewName("/front/passport/regIndex");
                 }
             }
         }
