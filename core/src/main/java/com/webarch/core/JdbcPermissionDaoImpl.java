@@ -22,7 +22,6 @@ import java.util.Map;
  * @author DR.YangLong [410357434@163.com]
  * @version 1.0    2015/8/6 19:27
  */
-@Component
 public class JdbcPermissionDaoImpl implements JdbcPermissionDao{
     @Autowired
     private SysResourcesMapper resourcesMapper;

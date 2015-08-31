@@ -114,6 +114,8 @@
          </property>-->
     </bean>
 
+    <!-- 动态权限信息DAO -->
+    <bean id="jdbcPermissionDao" class="com.webarch.core.JdbcPermissionDaoImpl"/>
     <!-- 动态权限资源配置-->
     <bean id="filterChainDefinitionsFactory" class="com.webarch.common.shiro.dynamic.DynamicPermissionServiceImpl">
         <property name="dynamicPermissionDao" ref="jdbcPermissionDao"/>

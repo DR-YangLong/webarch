@@ -15,6 +15,11 @@
             classpath:applicationContext.xml
         </param-value>
     </context-param>
+    <!-- 激活环境配置 -->
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>production</param-value>
+    </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
