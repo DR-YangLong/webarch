@@ -1,7 +1,7 @@
 package com.webarch.front.web;
 
+import com.webarch.common.constant.ValidateBizRule;
 import com.webarch.common.io.img.ValidateImg;
-import com.webarch.front.constant.ValidateBizRule;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class CommonController {
     private static final Logger logger= LoggerFactory.getLogger(CommonController.class);
     /**
      * 获取验证码图片
-     * <code>ruleName</code> is {@link com.webarch.front.constant.ValidateBizRule}
+     * <code>ruleName</code> is {@link com.webarch.common.constant.ValidateBizRule}
      *
      * @param response 响应对象
      */
