@@ -113,7 +113,7 @@ public class PageHelper {
      * @return
      */
     public boolean isHasNext(final int page) {
-        return page<this.pageSize;
+        return page<this.pageCount;
     }
 
 
@@ -124,6 +124,15 @@ public class PageHelper {
      */
     public boolean isHasPrevious(final int page) {
         return page>1;
+    }
+
+    /**
+     *
+     * @param page
+     * @return
+     */
+    public boolean isHasThisPage(final int page){
+        return this.pageCount>=page;
     }
 
     public int getTotalRows() {
