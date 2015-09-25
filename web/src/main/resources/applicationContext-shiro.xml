@@ -105,9 +105,6 @@
         </property>
         <!--<property name="filterChainDefinitions">
              <value>
-                 /els/share/**=anon
-                 /teachers/t/invite/** = anon
-                 /camp/comp/s/**=authc,roles[student]
                  /favicon.ico=anon
                  /** = authc,roles[student]
              </value>
