@@ -1,5 +1,6 @@
 package com.webarch.front.web;
 
+import com.baidu.ueditor.ActionEnter;
 import com.webarch.common.constant.ValidateBizRule;
 import com.webarch.common.io.img.ValidateImg;
 import org.apache.shiro.SecurityUtils;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
 /**
  * package: com.webarch.front.web <br/>
@@ -22,7 +25,7 @@ import java.io.OutputStream;
  * @version 1.0    2015/8/10 20:20
  */
 @Controller
-@RequestMapping("/common")
+@RequestMapping
 public class CommonController {
     private static final Logger logger= LoggerFactory.getLogger(CommonController.class);
     /**
@@ -31,7 +34,7 @@ public class CommonController {
      *
      * @param response 响应对象
      */
-    @RequestMapping(value = "/validateImg/{ruleName:\\d+}/ajax")
+    @RequestMapping(value = "/common/validateImg/{ruleName:\\d+}/ajax")
     public void getValiDate(@PathVariable(value = "ruleName") String ruleName, HttpServletResponse response) {
         try {
             //获取业务值的key
@@ -56,6 +59,32 @@ public class CommonController {
             }
         } catch (IOException e) {
             logger.debug("发送登陆验证图片出错！错误信息：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 初始化百度编辑器，可传入其他参数生成不同的编辑器
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/ueditor/init")
+    public void initUeditor(HttpServletResponse response,HttpServletRequest request){
+        response.setContentType("application/json");
+        //配置路径，首先还web app跟目录
+        String rootPath = request.getSession().getServletContext().getRealPath("/");
+        rootPath=rootPath+"static";
+        PrintWriter writer=null;
+        try {
+            String exec = new ActionEnter(request, rootPath).exec();
+            writer = response.getWriter();
+            writer.write(exec);
+            writer.flush();
+        } catch (IOException e) {
+            logger.error("百度编辑器初始化错误！",e);
+        }finally {
+            if(writer!=null){
+                writer.close();
+            }
         }
     }
 }
