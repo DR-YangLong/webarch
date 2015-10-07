@@ -70,8 +70,10 @@ public class CommonController {
     @RequestMapping("/ueditor/init")
     public void initUeditor(HttpServletResponse response,HttpServletRequest request){
         response.setContentType("application/json");
-        //配置路径，首先还web app跟目录
+        //配置路径，首先获取webpp根目录绝对路径
         String rootPath = request.getSession().getServletContext().getRealPath("/");
+        //将config.json放到与ueditor.config.js同一级的目录下。将ueditor所有文件放入到wapapp-static-ueditor下
+        //设置获取服务端配置文件地址修正路径，此路径同时作用于文件上传
         rootPath=rootPath+"static";
         PrintWriter writer=null;
         try {
