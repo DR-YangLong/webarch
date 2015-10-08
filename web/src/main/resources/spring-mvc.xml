@@ -104,8 +104,8 @@
 	<!-- file upload-->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="UTF-8" />
-		<!-- 5M -->
-		<property name="maxUploadSize" value="52428800" />
+		<!-- 5M bytes-->
+		<property name="maxUploadSize" value="5242880" />
 	</bean>
 
 	<!-- servlet default-->
