@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 修改驱动路径 -->
+    <classPathEntry location="D:\localRepo\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar"/>
+    <context id="MySQL" targetRuntime="MyBatis3">
+        <!--去除注释  -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/shiro"
+                        userId="root" password="root"></jdbcConnection>
+        <javaModelGenerator targetPackage="com.webarch.model" targetProject="MAVEN">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="com.webarch.mapper" targetProject="MAVEN">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.webarch.dao" targetProject="MAVEN">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 权限表，同样配置，修改表明和类名即可 -->
+        <table tableName="sys_permission" domainObjectName="SysPermission"
+               enableInsert="true" enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"
+               enableSelectByExample="false" enableDeleteByExample="false"
+               enableCountByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
