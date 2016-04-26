@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -100,7 +101,7 @@ public class DynamicPermissionServiceImpl implements DynamicPermissionService {
      *
      * @return Section
      */
-    private Ini.Section generateSection() {
+    private Map<String,String> generateSection() {
         Ini ini = new Ini();
         ini.load(definitions); // 加载资源文件节点串定义的初始化权限信息
         Ini.Section section = ini.getSection(IniFilterChainResolverFactory.URLS); // 使用默认节点
@@ -111,8 +112,13 @@ public class DynamicPermissionServiceImpl implements DynamicPermissionService {
          * 加载非初始化定义的权限信息
          */
         Map<String, String> permissionMap = loadDynamicPermission();
-        if (permissionMap != null && !permissionMap.isEmpty()) {
-            section.putAll(permissionMap);
+        if (!CollectionUtils.isEmpty(permissionMap)) {
+            if (CollectionUtils.isEmpty(section)) {
+                logger.error("*********获取初始静态配置URL权限映射失败，将使用外部加载权限信息进行配置*********");
+                return permissionMap;
+            } else {
+                section.putAll(permissionMap);
+            }
         }
         return section;
     }
@@ -123,7 +129,11 @@ public class DynamicPermissionServiceImpl implements DynamicPermissionService {
      */
     private Map<String, String> loadDynamicPermission() {
         Map<String,String> map=dynamicPermissionDao.findDefinitionsMap();
-        map.put("/**","anon");
+        if(CollectionUtils.isEmpty(map)){
+            map=new LinkedHashMap<>(2);
+            logger.error("**********没有进行初始化权限配置，将配置为全部不用验证！**********");
+        }
+        logger.debug("*************自定义权限配置完成，将其余链接设置为不用验证*************");
         return map;
     }
 
