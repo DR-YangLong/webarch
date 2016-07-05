@@ -14,7 +14,7 @@
 > logback
 
 #### 其他
-> JotaTime,Commons工具包,fastjson,kryo,fst,Jedis,poi,Jackson,thoughtworks,http client等
+> JodaTime,Commons工具包,fastjson,kryo,fst,Jedis,poi,Jackson,thoughtworks,http client等
 
 ### 功能说明
 #### common
