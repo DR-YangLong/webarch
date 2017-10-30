@@ -97,7 +97,6 @@ public class ShiroRealm extends AuthorizingRealm {
      * @return
      * @throws AuthenticationException
      */
-    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         Map<String, Object> info = realmService.getUserUniqueIdentityAndPassword(token.getUsername());
@@ -125,7 +124,6 @@ public class ShiroRealm extends AuthorizingRealm {
      * @param principals
      * @return
      */
-    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         if (!principals.isEmpty() && principals.fromRealm(getName()).size() > 0) {
             Object id = principals.fromRealm(getName()).iterator().next();
@@ -141,13 +139,13 @@ public class ShiroRealm extends AuthorizingRealm {
                     if (perms != null && !perms.isEmpty()) {
                         info.addStringPermissions(perms);
                     }
-                } else if (enableRoles && !enablePerms) {
-                    Collection<String> perms = realmService.getRoles(id);
+                } else if (!enableRoles && enablePerms) {
+                    Collection<String> perms = realmService.getPermissions(id);
                     if (perms != null && !perms.isEmpty()) {
                         info.addStringPermissions(perms);
                     }
-                } else if (enablePerms && !enableRoles) {
-                    Collection<String> roles = realmService.getPermissions(id);
+                } else if (!enablePerms && enableRoles) {
+                    Collection<String> roles = realmService.getRoles(id);
                     if (roles != null && !roles.isEmpty()) {
                         info.addRoles(roles);
                     }
@@ -156,9 +154,8 @@ public class ShiroRealm extends AuthorizingRealm {
             } else {
                 return null;
             }
-        } else {
+        } else
             return null;
-        }
     }
 
 
